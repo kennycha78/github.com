@@ -311,7 +311,7 @@
       document.getElementById('testMonth').value = '';
       document.getElementById('testDay').innerHTML = '<option value="">일 선택</option>';
       btn.disabled = false; btn.textContent = '전송하기 →';
-      document.getElementById('gasScript').remove();
+      const gs = document.getElementById('gasScript'); if(gs) gs.remove();
     };
 
     const script = document.createElement('script');
