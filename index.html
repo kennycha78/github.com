@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>수면압력 신청서</title>
+<title>검사 장비 신청서</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -31,11 +31,9 @@
     padding: 4px 12px;
     border-radius: 20px;
     margin-bottom: 10px;
-    letter-spacing: 0.02em;
   }
   .header h1 { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
   .header p { font-size: 13px; color: #888; line-height: 1.5; }
-
   .section-label {
     font-size: 11px;
     font-weight: 700;
@@ -70,8 +68,6 @@
   }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .divider { border: none; border-top: 1.5px solid #F0F0F5; margin: 20px 0; }
-
-  /* 마스크 옵션 */
   .mask-options { display: flex; flex-direction: column; gap: 10px; }
   .mask-option {
     display: flex; align-items: center; gap: 14px;
@@ -89,7 +85,6 @@
     width: 20px; height: 20px; border-radius: 50%;
     border: 2px solid #CCC; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    transition: border-color 0.15s;
   }
   .mask-option.selected .radio-dot { border-color: #5247D4; }
   .radio-dot::after {
@@ -110,41 +105,7 @@
   .mask-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
   .mask-price { font-size: 15px; font-weight: 700; color: #5247D4; white-space: nowrap; }
   .mask-desc { font-size: 12px; color: #888; margin-top: 3px; line-height: 1.4; }
-
-  /* 날짜 */
-  .date-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: center; }
-  .year-badge {
-    background: #F0F0F8; border: 1.5px solid #E8E8EE;
-    border-radius: 10px; padding: 11px 10px;
-    font-size: 14px; font-weight: 700; color: #5247D4;
-    text-align: center;
-  }
-
-  /* 주소 검색 */
-  .addr-search-row { display: flex; gap: 8px; }
-  .addr-search-row input { flex: 1; }
-  .search-btn {
-    padding: 11px 18px;
-    border: 1.5px solid #5247D4;
-    border-radius: 10px;
-    background: #fff;
-    color: #5247D4;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s, color 0.15s;
-  }
-  .search-btn:hover { background: #5247D4; color: #fff; }
-  .addr-selected {
-    margin-top: 10px; padding: 12px 14px;
-    background: #EEEDFE; border: 1.5px solid #AFA9EC;
-    border-radius: 10px; font-size: 13px; color: #3C3489; display: none;
-    line-height: 1.5;
-  }
-  .addr-selected strong { font-weight: 700; display: block; margin-bottom: 2px; }
-
-  /* 전송 버튼 */
+  .date-row { display: grid; grid-template-columns: 110px 1fr 1fr; gap: 8px; }
   .submit-btn {
     width: 100%; padding: 15px;
     border: none; border-radius: 12px;
@@ -152,12 +113,10 @@
     font-size: 16px; font-weight: 700;
     cursor: pointer; margin-top: 8px;
     transition: opacity 0.15s, transform 0.1s;
-    letter-spacing: 0.02em;
   }
   .submit-btn:hover { opacity: 0.92; }
   .submit-btn:active { transform: scale(0.99); }
   .submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
   .toast {
     display: none; padding: 14px 16px;
     border-radius: 10px; font-size: 14px;
@@ -166,7 +125,6 @@
   }
   .toast.success { background: #EAF3DE; color: #3B6D11; border: 1px solid #C0DD97; }
   .toast.error { background: #FCEBEB; color: #A32D2D; border: 1px solid #F7C1C1; }
-
   @media (max-width: 400px) {
     .card { padding: 20px 16px 24px; }
     .row2 { grid-template-columns: 1fr; }
@@ -184,7 +142,6 @@
   </div>
 
   <div class="section-label">환자 정보</div>
-
   <div class="row2">
     <div class="field">
       <label>환자 이름 *</label>
@@ -192,72 +149,54 @@
     </div>
     <div class="field">
       <label>전화번호 *</label>
-      <input type="tel" id="phone" placeholder="010-1234-5678" inputmode="tel" autocomplete="tel" />
+      <input type="tel" id="phone" placeholder="010-1234-5678" inputmode="tel" />
     </div>
   </div>
-
   <div class="field">
     <label>주민번호 *</label>
-    <div style="display:flex; align-items:center; gap:8px;">
-      <input type="text" id="rrnFront" placeholder="앞 6자리" maxlength="6"
-        inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-        style="flex:1;" />
-      <span style="font-size:18px; color:#aaa; flex-shrink:0;">—</span>
-      <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
-        <input type="text" id="rrnBack1" maxlength="1" inputmode="numeric"
-          oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-          placeholder="0"
-          style="width:44px; text-align:center;" />
-        <div style="display:flex; gap:4px; align-items:center;">
-          <span style="font-size:18px; color:#ccc; letter-spacing:2px;">●●●●●●</span>
-        </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <input type="text" id="rrnFront" placeholder="앞 6자리" maxlength="6" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" style="flex:1;" />
+      <span style="font-size:18px;color:#aaa;flex-shrink:0;">—</span>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <input type="text" id="rrnBack1" maxlength="1" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="0" style="width:44px;text-align:center;" />
+        <span style="font-size:18px;color:#ccc;letter-spacing:2px;">●●●●●●</span>
       </div>
     </div>
   </div>
 
   <hr class="divider" />
   <div class="section-label">마스크 선택</div>
-
   <div class="mask-options">
-    <div class="mask-option" id="opt-nasal" onclick="selectMask(this,'나잘 마스크 (19,000원)')">
+    <div class="mask-option" onclick="selectMask(this,'나잘 마스크 (19,000원)')">
       <input type="radio" name="maskType" value="나잘 마스크 (19,000원)" />
       <div class="radio-dot"></div>
       <div class="mask-icon nasal">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="7" width="16" height="10" rx="5" fill="#1D9E75"/><circle cx="11" cy="12" r="2.5" fill="white"/></svg>
       </div>
       <div class="mask-info">
-        <div class="mask-top">
-          <span class="mask-name">1번 — 나잘 마스크</span>
-          <span class="mask-price">19,000원</span>
-        </div>
+        <div class="mask-top"><span class="mask-name">1번 — 나잘 마스크</span><span class="mask-price">19,000원</span></div>
         <div class="mask-desc">코 전체를 덮는 삼각형 마스크 · 가장 일반적인 타입</div>
       </div>
     </div>
-    <div class="mask-option" id="opt-pillow" onclick="selectMask(this,'필로우 마스크 (62,000원)')">
+    <div class="mask-option" onclick="selectMask(this,'필로우 마스크 (62,000원)')">
       <input type="radio" name="maskType" value="필로우 마스크 (62,000원)" />
       <div class="radio-dot"></div>
       <div class="mask-icon pillow">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="13" rx="6" ry="5" fill="#378ADD"/><ellipse cx="8.5" cy="12" rx="1.5" ry="2" fill="white"/><ellipse cx="13.5" cy="12" rx="1.5" ry="2" fill="white"/></svg>
       </div>
       <div class="mask-info">
-        <div class="mask-top">
-          <span class="mask-name">2번 — 필로우 마스크</span>
-          <span class="mask-price">62,000원</span>
-        </div>
+        <div class="mask-top"><span class="mask-name">2번 — 필로우 마스크</span><span class="mask-price">62,000원</span></div>
         <div class="mask-desc">콧구멍에 직접 삽입하는 쿠션형 · 개방감 선호 환자용</div>
       </div>
     </div>
-    <div class="mask-option" id="opt-fullface" onclick="selectMask(this,'풀페이스 마스크 (62,000원)')">
+    <div class="mask-option" onclick="selectMask(this,'풀페이스 마스크 (62,000원)')">
       <input type="radio" name="maskType" value="풀페이스 마스크 (62,000원)" />
       <div class="radio-dot"></div>
       <div class="mask-icon fullface">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="4" width="16" height="15" rx="5" fill="#EF9F27"/><rect x="6" y="8" width="10" height="5" rx="2.5" fill="white"/><rect x="7.5" y="14" width="7" height="2" rx="1" fill="white"/></svg>
       </div>
       <div class="mask-info">
-        <div class="mask-top">
-          <span class="mask-name">3번 — 풀페이스 마스크</span>
-          <span class="mask-price">62,000원</span>
-        </div>
+        <div class="mask-top"><span class="mask-name">3번 — 풀페이스 마스크</span><span class="mask-price">62,000원</span></div>
         <div class="mask-desc">코와 입을 모두 덮는 마스크 · 구호흡 환자용</div>
       </div>
     </div>
@@ -265,11 +204,10 @@
 
   <hr class="divider" />
   <div class="section-label">검사 일정</div>
-
   <div class="field">
     <label>검사 날짜 *</label>
-    <div class="date-row" style="grid-template-columns: 110px 1fr 1fr;">
-      <select id="testYear" onchange="updateDays()" style="font-weight:700; color:#5247D4;">
+    <div class="date-row">
+      <select id="testYear" onchange="updateDays()" style="font-weight:700;color:#5247D4;">
         <option value="2026">2026년</option>
         <option value="2027">2027년</option>
       </select>
@@ -282,18 +220,15 @@
         <option value="09">9월</option><option value="10">10월</option>
         <option value="11">11월</option><option value="12">12월</option>
       </select>
-      <select id="testDay">
-        <option value="">일 선택</option>
-      </select>
+      <select id="testDay"><option value="">일 선택</option></select>
     </div>
   </div>
 
   <hr class="divider" />
   <div class="section-label">병원 정보</div>
-
   <div class="field">
-    <label>병원명 * <span style="font-weight:400; color:#aaa;">(지역 포함)</span></label>
-    <input type="text" id="hospitalName" placeholder="예) 삼성숨소리의원 강남 / 서울숨소리클리닉 강원" />
+    <label>병원명 * <span style="font-weight:400;color:#aaa;">(지역 포함)</span></label>
+    <input type="text" id="hospitalName" placeholder="예) 삼성숨소리의원 강남" />
   </div>
 
   <button class="submit-btn" id="submitBtn" onclick="submitForm()">전송하기 →</button>
@@ -301,7 +236,6 @@
 </div>
 
 <script>
-  // ★ 구글 앱스스크립트 배포 후 URL을 여기에 붙여넣으세요 ★
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzb6rUC8XD2ntYCHhkmsVaPcunXLeV0CKfxXnej_wql4_34hEKd_IWnwQfXisKPd1n/exec";
 
   function selectMask(el, val) {
@@ -347,28 +281,24 @@
       showToast('⚠️ 모든 항목을 빠짐없이 입력해주세요.', 'error'); return;
     }
 
-    if (SCRIPT_URL.includes('여기에')) {
-      showToast('⚠️ 구글 앱스스크립트 URL이 아직 설정되지 않았습니다.', 'error'); return;
-    }
-
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '전송 중...';
 
-    const payload = {
-      제출일시:       new Date().toLocaleString('ko-KR'),
-      환자이름:       name,
-      주민번호앞자리: rrnF + '-' + rrnB + '******',
-      전화번호:       phone,
-      마스크타입:     mask.value,
-      검사날짜:       `${year}-${month}-${day}`,
-      병원명:         hospital
-    };
+    const form = new FormData();
+    form.append('제출일시', new Date().toLocaleString('ko-KR'));
+    form.append('환자이름', name);
+    form.append('주민번호앞자리', rrnF + '-' + rrnB + '******');
+    form.append('전화번호', phone);
+    form.append('마스크타입', mask.value);
+    form.append('검사날짜', year + '-' + month + '-' + day);
+    form.append('병원명', hospital);
 
-    const params = new URLSearchParams(payload);
-    fetch(SCRIPT_URL + '?' + params.toString(), {
-      method: 'GET', mode: 'no-cors'
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: form
     }).then(() => {
-      showToast('✅ 전송 완료!<br>구글 시트에 저장되었습니다. 검사일 전 병원으로 발송해드리겠습니다.', 'success');
+      showToast('✅ 전송 완료!<br>검사일 전 병원으로 발송해드리겠습니다.', 'success');
       document.getElementById('patientName').value = '';
       document.getElementById('rrnFront').value = '';
       document.getElementById('rrnBack1').value = '';
@@ -381,7 +311,7 @@
       document.getElementById('testDay').innerHTML = '<option value="">일 선택</option>';
       btn.disabled = false; btn.textContent = '전송하기 →';
     }).catch(() => {
-      showToast('❌ 전송 실패. 네트워크를 확인하거나 다시 시도해주세요.', 'error');
+      showToast('❌ 전송 실패. 다시 시도해주세요.', 'error');
       btn.disabled = false; btn.textContent = '전송하기 →';
     });
   }
